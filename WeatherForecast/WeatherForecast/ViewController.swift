@@ -7,7 +7,7 @@
 import UIKit
 import CoreLocation
 
-class ViewController: UIViewController {
+class ViewController: UICollectionViewController {
     
     private let repository = Repository()
     
