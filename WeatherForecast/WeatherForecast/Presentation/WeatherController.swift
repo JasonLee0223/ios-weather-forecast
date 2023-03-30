@@ -1,5 +1,5 @@
 //
-//  WeatherForecast - CollectionViewController.swift
+//  WeatherForecast - WeatherController.swift
 //  Created by yagom.
 //  Copyright © yagom. All rights reserved.
 //
@@ -7,7 +7,7 @@
 import UIKit
 import CoreLocation
 
-class ViewController: UICollectionViewController {
+class WeatherController: UICollectionViewController {
     
     private let repository = Repository()
     
