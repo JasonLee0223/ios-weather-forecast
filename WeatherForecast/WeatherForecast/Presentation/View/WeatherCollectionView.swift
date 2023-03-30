@@ -11,6 +11,10 @@ class WeatherCollectionView: UICollectionView {
     
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        
+        self.isScrollEnabled = true
+        self.register(WeatherForecastHeaderView.self,
+                      forSupplementaryViewOfKind: WeatherCollectionView.elementKindSectionHeader, withReuseIdentifier: WeatherForecastHeaderView.identifier)
     }
     
     required init?(coder: NSCoder) {
