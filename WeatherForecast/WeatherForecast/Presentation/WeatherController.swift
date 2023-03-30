@@ -14,6 +14,8 @@ class WeatherController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        collectionView = WeatherCollectionView()
+        
         UserLocation.shared.authorize()
     }
     
@@ -46,4 +48,5 @@ class WeatherController: UICollectionViewController {
             }
         }
     }
+    
 }
