@@ -1,5 +1,5 @@
 //
-//  WeatherForecast - ViewController.swift
+//  WeatherForecast - CollectionViewController.swift
 //  Created by yagom.
 //  Copyright © yagom. All rights reserved.
 //
