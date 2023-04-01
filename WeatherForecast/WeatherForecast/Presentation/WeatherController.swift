@@ -7,14 +7,12 @@
 import UIKit
 import CoreLocation
 
-class WeatherController: UICollectionViewController {
+class WeatherController: UIViewController {
     
     private let repository = Repository()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        collectionView = WeatherCollectionView()
         
         UserLocation.shared.authorize()
     }
