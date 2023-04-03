@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ForecastViewModel: Hashable {
+struct ForecastViewModel: Hashable, WeatherViewModel {
     let identifier = UUID()
     let forecastInformation: String
     let forecastDegree: String
