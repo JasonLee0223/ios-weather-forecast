@@ -13,7 +13,7 @@ struct ForecastViewModel: Hashable {
     let forecastDegree: String
     let forecastEmogi: Data
     
-    static func == (lhs: CurrentViewModel, rhs: CurrentViewModel) -> Bool {
+    static func == (lhs: ForecastViewModel, rhs: ForecastViewModel) -> Bool {
         return lhs.identifier == rhs.identifier
     }
 }
