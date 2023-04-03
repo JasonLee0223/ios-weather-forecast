@@ -162,7 +162,6 @@
 			isa = PBXGroup;
 			children = (
 				5B189BDD29DA744600DDFB4A /* WeatherForecastView.swift */,
-				5B189BCE29D5953D00DDFB4A /* WeatherForecastHeaderView.swift */,
 				5B189BCD29D594EC00DDFB4A /* Cells */,
 			);
 			path = View;
@@ -171,6 +170,7 @@
 		5B189BCD29D594EC00DDFB4A /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				5B189BCE29D5953D00DDFB4A /* WeatherForecastHeaderView.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
