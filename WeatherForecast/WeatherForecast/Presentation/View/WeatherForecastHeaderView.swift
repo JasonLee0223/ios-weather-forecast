@@ -13,12 +13,11 @@ class WeatherForecastHeaderView: UICollectionReusableView {
     
     static let identifier = "weatherHeaderView"
     
-    
     //MARK: - Initializer
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        configuration()
     }
     
     required init?(coder: NSCoder) {
