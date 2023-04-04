@@ -12,6 +12,7 @@ class WeatherForecastView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         createLayout()
+        backgroundColor = .red
     }
     
     required init?(coder: NSCoder) {
@@ -52,6 +53,12 @@ class WeatherForecastView: UIView {
     }
     
     private func configureCollectionView() -> UICollectionViewLayout {
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(50.0))
+        
+        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
+                                                                 elementKind: UICollectionView.elementKindSectionHeader,
+                                                                 alignment: .top)
+        
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
@@ -62,6 +69,9 @@ class WeatherForecastView: UIView {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .paging
         section.interGroupSpacing = 0
+        
+        section.boundarySupplementaryItems = [header]
+        section.orthogonalScrollingBehavior = .continuous
       
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
