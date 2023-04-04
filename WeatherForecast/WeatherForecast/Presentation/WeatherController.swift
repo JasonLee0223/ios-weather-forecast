@@ -7,7 +7,7 @@
 import UIKit
 import CoreLocation
 
-class WeatherController: UIViewController {
+class WeatherController: UICollectionViewController {
     
     private let repository = Repository()
     
