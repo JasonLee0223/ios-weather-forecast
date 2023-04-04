@@ -20,7 +20,7 @@ class WeatherForecastView: UIView {
     }
     
     private lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: configureCollectionView())
         
         collectionView.isScrollEnabled = true
         collectionView.clipsToBounds = true
@@ -51,5 +51,19 @@ class WeatherForecastView: UIView {
         ])
     }
     
-    //TODO: - CompositionalLayout 구현 예정
+    private func configureCollectionView() -> UICollectionViewLayout {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(1.0))
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .paging
+        section.interGroupSpacing = 0
+      
+        let layout = UICollectionViewCompositionalLayout(section: section)
+        return layout
+    }
 }
