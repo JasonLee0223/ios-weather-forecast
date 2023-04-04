@@ -20,11 +20,12 @@ class WeatherForecastView: UIView {
         fatalError("Can't drawing collectioView")
     }
     
-    private lazy var collectionView: UICollectionView = {
+    lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: configureCollectionView())
         
         collectionView.isScrollEnabled = true
         collectionView.clipsToBounds = true
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         collectionView.register(WeatherForecastHeaderView.self,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
