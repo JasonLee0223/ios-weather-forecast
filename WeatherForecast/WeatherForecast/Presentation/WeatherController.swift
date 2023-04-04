@@ -8,6 +8,9 @@ import UIKit
 import CoreLocation
 
 class WeatherController: UICollectionViewController {
+enum Section: CaseIterable {
+    case main
+}
     
     private let repository = Repository()
     
