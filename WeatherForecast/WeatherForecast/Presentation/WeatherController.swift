@@ -54,4 +54,15 @@ class ViewController: UIViewController {
         }
     }
     
+    private func snapshotForCurrentState() -> NSDiffableDataSourceSnapshot<Section, ForecastViewModel> {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, ForecastViewModel>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(itemsForForecastCollectionView())
+        return snapshot
+    }
+    
+    private func itemsForForecastCollectionView() -> [ForecastViewModel] {
+        return [ForecastViewModel(forecastInformation: "current state information",
+                                  forecastDegree: "온도", forecastEmogi: Data(count: 1))]
+    }
 }
