@@ -12,7 +12,12 @@ enum Section: CaseIterable {
 }
 class WeatherController: UIViewController {
     
+    typealias DiffableDataSource = UICollectionViewDiffableDataSource<Section, ForecastViewModel>
+    
     private let repository = Repository()
+    private lazy var weatherForecastView = WeatherForecastView(frame: view.frame)
+    
+    private var dataSourse: UICollectionViewDiffableDataSource<Section, ForecastViewModel>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
