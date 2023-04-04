@@ -22,6 +22,8 @@ class ViewController: UIViewController {
         collectionView = WeatherCollectionView()
         
         UserLocation.shared.authorize()
+        self.view = weatherForecastView
+        
     }
     
     @IBAction func printWeatherInformation(_ sender: UIButton) {
@@ -53,6 +55,10 @@ class ViewController: UIViewController {
             }
         }
     }
+}
+
+//MARK: - Configure of DiffableDataSource
+extension WeatherController {
     
     private func snapshotForCurrentState() -> NSDiffableDataSourceSnapshot<Section, ForecastViewModel> {
         var snapshot = NSDiffableDataSourceSnapshot<Section, ForecastViewModel>()
