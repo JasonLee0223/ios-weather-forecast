@@ -10,7 +10,7 @@ import Foundation
 struct ForecastViewModel: Hashable {
     let identifier = UUID()
     let forecastInformation: ForecastInformation
-    let forecastEmogi: Data
+    let forecastEmogi: String
     
     static func == (lhs: ForecastViewModel, rhs: ForecastViewModel) -> Bool {
         return lhs.identifier == rhs.identifier
