@@ -70,9 +70,15 @@ final class ForecastWeatherCell: UICollectionViewCell {
 
 private extension DateFormatter {
     func transWeahterDateForm(from date: String) -> String {
+        guard let temp = stringToDate(from: date) else { return "" }
         self.dateFormat = "MM/dd(E) HH시"
         self.locale = Locale(identifier:"ko_KR")
-        guard let temp = self.date(from: date) else { return "" }
         return self.string(from: temp)
+    }
+
+    private func stringToDate(from date: String) -> Date? {
+        self.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let data = self.date(from: date)
+        return data
     }
 }
