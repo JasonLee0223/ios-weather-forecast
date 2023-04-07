@@ -1,5 +1,5 @@
 //
-//  CurrentWeatherDTO.swift
+//  APIWeatherModelDTO.swift
 //  WeatherForecast
 //
 //  Created by Jason on 2023/04/05.
@@ -8,7 +8,7 @@
 import Foundation
 import CoreLocation
 
-final class CurrentWeatherDTO {
+final class APIWeatherModelDTO {
     
     //MARK: - Private Property
 
