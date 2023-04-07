@@ -27,7 +27,6 @@ class APIWeatherModelDTO {
     }
     
     func determineDTO(with location: CLLocationCoordinate2D) {
-//        var elements: [WeatherViewModel] = []
         
         URLPath.allCases.forEach { path in
             switch path {
@@ -37,7 +36,6 @@ class APIWeatherModelDTO {
                     DispatchQueue.main.async {
                         if let currentWeatherModel = weatherModel as? CurrentWeather {
                             let result = self.makeCurrentWeatherDTO(with: currentWeatherModel)
-                            print(#function, #line, "inner Delegate \(result)")
                             self.delegate?.loadCurrentWeather(of: result)
                         }
                     }
@@ -45,8 +43,10 @@ class APIWeatherModelDTO {
             case .forecastWeather:
                 repository.loadData(with: location,
                                     path: path) { weatherModel, error in
-                    if let forecastWeatherModel = weatherModel as? ForecastWeather {
-                        self.delegate?.loadForecastWeather(of: self.makeForecastWeatherDTO(with: forecastWeatherModel))
+                    DispatchQueue.main.async {
+                        if let forecastWeatherModel = weatherModel as? ForecastWeather {
+                            self.delegate?.loadForecastWeather(of: self.makeForecastWeatherDTO(with: forecastWeatherModel))
+                        }
                     }
                 }
             }
