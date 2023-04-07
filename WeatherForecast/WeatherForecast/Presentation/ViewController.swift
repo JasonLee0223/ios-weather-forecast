@@ -10,6 +10,7 @@ import CoreLocation
 class ViewController: UIViewController {
     
     private let repository = Repository()
+    let apiDTO = APIWeatherModelDTO()
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: configureCollectionView())
         
@@ -27,12 +28,16 @@ class ViewController: UIViewController {
         self.view.addSubview(collectionView)
         return collectionView
     }()
+    private var currentWeather: CurrentViewModel?
+    private var forecastWeather: ForecastViewModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        apiDTO.delegate = self
         collectionView.dataSource = self
         UserLocation.shared.authorize()
+        apiDTO.determineDTO(with: apiDTO.receiveCurrentLocation())
     }
 }
 
@@ -58,6 +63,7 @@ extension ViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
 
+
         return cell
     }
 
@@ -67,9 +73,26 @@ extension ViewController: UICollectionViewDataSource {
             guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CurrentWeatherHeaderView.identifier, for: indexPath) as? CurrentWeatherHeaderView else {
                 return UICollectionReusableView()
             }
+            headerView.prepare(text: currentWeather?.temperature.currentTemperature ?? "wow")
             return headerView
         default:
             return UICollectionReusableView()
         }
     }
+}
+
+extension ViewController: WeatherModelDelegate {
+    func loadCurrentWeather(of: CurrentViewModel) {
+        print(#line, "wow!")
+        currentWeather = of
+        self.collectionView.reloadData()
+    }
+
+    func loadForecastWeather(of: ForecastViewModel) {
+        print(#line, "wow!")
+        forecastWeather = of
+//        self.collectionView.reloadData()
+    }
+
+    
 }

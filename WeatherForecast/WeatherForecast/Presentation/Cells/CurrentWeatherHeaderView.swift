@@ -109,5 +109,9 @@ class CurrentWeatherHeaderView: UICollectionReusableView {
             addressInformationView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor)
         ])
     }
+
+    func prepare(text: String) {
+        currentTemperature.text = text
+    }
 }
 
