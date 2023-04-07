@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CurrentViewModel: Hashable {
+struct CurrentViewModel: Hashable, WeatherViewModel {
     let identifier = UUID()
     let currentWeatherIcon: String
     let temperature: Temperature
