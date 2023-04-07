@@ -12,6 +12,8 @@ final class UseCase {
     weak var delegate: WeatherModelDelegate?
 
     private let repository: Repository
+    
+    private var storage: [String : Data]
 
     init() {
         self.repository = Repository()
@@ -51,17 +53,18 @@ final class UseCase {
         }
     }
     
-    func temp() {
+    //MARK: - Icon Image Test
+    func loadIconImage() {
         repository.loadIcon { (data, error) in
             DispatchQueue.main.async {
                 guard let certifiedData = data else {
                     return
                 }
-                self.delegate?.loadIcon(of: certifiedData)
+                
             }
         }
     }
-
+    
     //MARK: - Private Method
 
     private func makeCurrentWeather(with data: CurrentWeather) -> CurrentViewModel {
@@ -81,7 +84,7 @@ final class UseCase {
     }
 
     private func makeForecastWeather(with data: ForecastWeather) -> [ForecastViewModel] {
-
+        
         var forecastViewModels = [ForecastViewModel]()
 
         data.list.forEach { element in

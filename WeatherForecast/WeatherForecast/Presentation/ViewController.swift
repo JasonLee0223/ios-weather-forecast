@@ -35,6 +35,7 @@ class ViewController: UIViewController {
     
     private var currentWeather: CurrentViewModel?
     private var forecastWeathers: [ForecastViewModel]?
+    private var iconData: Data?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +45,7 @@ class ViewController: UIViewController {
         UserLocation.shared.authorize()
         
         let location = useCase.receiveCurrentLocation()
+        
         useCase.determine(with: location)
     }
 }
@@ -104,6 +106,11 @@ extension ViewController: WeatherModelDelegate {
 
     func loadForecastWeather(of model: [ForecastViewModel]) {
         forecastWeathers = model
+        self.collectionView.reloadData()
+    }
+    
+    func loadIcon(of data: Data) {
+        iconData = data
         self.collectionView.reloadData()
     }
 }

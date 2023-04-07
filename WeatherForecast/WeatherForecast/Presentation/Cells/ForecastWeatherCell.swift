@@ -53,8 +53,13 @@ final class ForecastWeatherCell: UICollectionViewCell {
             stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15)
         ])
     }
+    
+    //MARK: - Public Method
 
     func prepare(model: ForecastViewModel) {
+        let usecase = UseCase()
+        
+        
         dateLabel.text = DateFormatter().transWeahterDateForm(from: model.forecastInformation.forecastDate)
         atmosphericTemperatureLabel.text = model.forecastInformation.forecastDegree + "˚"
         weatherImage.image = UIImage(named: model.forecastEmogi)
