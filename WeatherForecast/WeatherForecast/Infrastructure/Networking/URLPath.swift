@@ -11,6 +11,10 @@ enum URLPath: String, CaseIterable {
     case currentWeather
     case forecastWeather
     
+    static let iconList = ["01d", "01n", "02d", "02n", "03d", "03n","04d", "04n",
+                           "09d", "09n", "10d", "10n", "11d", "11n", "13d", "13n",
+                           "50d", "50n",]
+    
     var weatherMetaType: WeatherModel.Type {
         switch self {
         case .currentWeather:
@@ -45,6 +49,20 @@ enum URLPath: String, CaseIterable {
 
         let appid = URLQueryItem(name: OpenWeatherParameter.apiKey, value: weatherAPIKEY)
         components.queryItems = [latitude, longitude, appid, unitsOfMeasurement]
+        
+        guard let url = components.url else {
+            throw URLComponentsError.invalidComponent
+        }
+        
+        return url
+    }
+    
+    static func configureIconURL(of iconDescription: String) throws -> URL {
+        let baseURL: String = "https://openweathermap.org/img/wn/"
+        
+        guard let components = URLComponents(string: "\(baseURL)\(iconDescription)" + "@2x.png" ) else {
+            throw URLComponentsError.invalidComponent
+        }
         
         guard let url = components.url else {
             throw URLComponentsError.invalidComponent
