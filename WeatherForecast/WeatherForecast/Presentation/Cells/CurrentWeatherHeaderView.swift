@@ -37,37 +37,18 @@ class CurrentWeatherHeaderView: UICollectionReusableView {
     
     private var currentLocation: UILabel = {
         let currentLocation = UILabel()
-//        currentLocation.text = "서울특별시 용산구"
-        
         return currentLocation
     }()
     
     private var lowestAndHighestTemperature: UILabel = {
         let lowestAndHighestTemperature = UILabel()
-//        lowestAndHighestTemperature.text = "최저 1.0˚ 최고 11.0˚"
-        
         return lowestAndHighestTemperature
     }()
     
     private var currentTemperature: UILabel = {
         let currentTemperature = UILabel()
-//        currentTemperature.text = "11.0˚"
-        
         return currentTemperature
     }()
-    
-    //MARK: - Public Method
-    func prepareForCurrentLocation(text: String) {
-        currentLocation.text = text
-    }
-    
-    func prepareLowestAndHighestTemperature(text: String) {
-        lowestAndHighestTemperature.text = text
-    }
-    
-    func prepareCurrentTemperature(text: String) {
-        currentTemperature.text = text
-    }
     
     //MARK: - StackView
     
@@ -98,10 +79,10 @@ class CurrentWeatherHeaderView: UICollectionReusableView {
         
         currentInformationView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            currentInformationView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 30),
+            currentInformationView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
             currentInformationView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
             currentInformationView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
-            currentInformationView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -30)
+            currentInformationView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor)
         ])
         
         addressInformationView.translatesAutoresizingMaskIntoConstraints = false
@@ -110,8 +91,10 @@ class CurrentWeatherHeaderView: UICollectionReusableView {
         ])
     }
 
-    func prepare(text: String) {
-        currentTemperature.text = text
+    func prepare(model: CurrentViewModel) {
+        currentWeatherEmoji.image = UIImage(named: model.currentWeatherIcon)
+        currentLocation.text = "서울특별시 용산구"
+        lowestAndHighestTemperature.text = "최저 \(model.temperature.lowestTemperature)˚" + "최고 \(model.temperature.highestTemperature)˚ "
+        currentTemperature.text = model.temperature.currentTemperature
     }
 }
-
