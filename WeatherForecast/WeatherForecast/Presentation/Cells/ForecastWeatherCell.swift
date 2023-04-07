@@ -13,7 +13,7 @@ final class ForecastWeatherCell: UICollectionViewCell {
     private lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.text = "04/10(월) 13시"
-        label.font = .systemFont(ofSize: 25)
+        label.font = .systemFont(ofSize: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.setContentHuggingPriority(.defaultLow, for: .horizontal)
         return label
@@ -22,7 +22,7 @@ final class ForecastWeatherCell: UICollectionViewCell {
     private lazy var atmosphericTemperatureLabel: UILabel = {
         let label = UILabel()
         label.text = "13˚"
-        label.font = .systemFont(ofSize: 25)
+        label.font = .systemFont(ofSize: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return label
@@ -33,11 +33,16 @@ final class ForecastWeatherCell: UICollectionViewCell {
         imageView.image = UIImage(systemName: "cloud.sun.fill")
         imageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         imageView.contentMode = .scaleAspectFill
+//        imageView.contentMode = .center
+//        imageView.clipsToBounds = true
         return imageView
     }()
 
     lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [dateLabel, atmosphericTemperatureLabel, weatherImage])
+        stackView.subviews.forEach { subview in
+            (subview as? UILabel)?.textColor = .white
+        }
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.distribution = .fill
@@ -49,10 +54,10 @@ final class ForecastWeatherCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         NSLayoutConstraint.activate([
-            stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-            stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
-            stackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
-            stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15)
+            stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 18),
+            stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -18),
+            stackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 18),
+            stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -18)
         ])
     }
 

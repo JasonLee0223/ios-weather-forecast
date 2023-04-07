@@ -8,7 +8,13 @@ import UIKit
 import CoreLocation
 
 class ViewController: UIViewController {
-    
+
+    let imageView: UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage(named: "WeatherBackground")
+        iv.contentMode = .scaleAspectFill
+        return iv
+    }()
     private let repository = Repository()
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: configureCollectionView())
@@ -22,15 +28,13 @@ class ViewController: UIViewController {
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CurrentWeatherHeaderView.identifier)
         collectionView.register(ForecastWeatherCell.self, forCellWithReuseIdentifier: ForecastWeatherCell.identifier)
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
-        collectionView.backgroundColor = .red
+        collectionView.backgroundView = imageView
         self.view.addSubview(collectionView)
         return collectionView
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         collectionView.dataSource = self
         UserLocation.shared.authorize()
     }
@@ -38,8 +42,9 @@ class ViewController: UIViewController {
 
 extension ViewController {
     private func configureCollectionView() -> UICollectionViewLayout {
-        var configuration = UICollectionLayoutListConfiguration(appearance: .plain)
+        var configuration = UICollectionLayoutListConfiguration(appearance: .grouped)
         configuration.headerMode = .supplementary
+        configuration.backgroundColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 0.6)
         return UICollectionViewCompositionalLayout.list(using: configuration)
     }
 }
@@ -50,7 +55,7 @@ extension ViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        20
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -72,9 +77,3 @@ extension ViewController: UICollectionViewDataSource {
         }
     }
 }
-
-//extension ViewController: UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: self.view.frame.width, height: 500)
-//    }
-//}
