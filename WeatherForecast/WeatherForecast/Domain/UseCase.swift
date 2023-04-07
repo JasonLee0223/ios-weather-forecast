@@ -50,6 +50,17 @@ final class UseCase {
             }
         }
     }
+    
+    func temp() {
+        repository.loadIcon { (data, error) in
+            DispatchQueue.main.async {
+                guard let certifiedData = data else {
+                    return
+                }
+                self.delegate?.loadIcon(of: certifiedData)
+            }
+        }
+    }
 
     //MARK: - Private Method
 
@@ -94,5 +105,6 @@ final class UseCase {
 protocol WeatherModelDelegate: NSObject {
     func loadCurrentWeather(of model: CurrentViewModel)
     func loadForecastWeather(of model: [ForecastViewModel])
+    func loadIcon(of data: Data)
 }
 
