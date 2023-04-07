@@ -8,17 +8,16 @@
 import CoreLocation
 
 final class UseCase {
-
-    weak var delegate: WeatherModelDelegate?
-
-    private let repository: Repository
     
-    private var storage: [String : Data]
-
+    weak var delegate: WeatherModelDelegate?
+    
+    private let repository: Repository
+    private var storage = [String:Data]()
+    
     init() {
         self.repository = Repository()
     }
-
+    
     func receiveCurrentLocation() -> CLLocationCoordinate2D {
         guard let location = UserLocation.shared.location?.coordinate else {
             //TODO: - Error 처리
@@ -26,7 +25,7 @@ final class UseCase {
         }
         return location
     }
-
+    
     func determine(with location: CLLocationCoordinate2D) {
         URLPath.allCases.forEach { path in
             switch path {
@@ -53,20 +52,8 @@ final class UseCase {
         }
     }
     
-    //MARK: - Icon Image Test
-    func loadIconImage() {
-        repository.loadIcon { (data, error) in
-            DispatchQueue.main.async {
-                guard let certifiedData = data else {
-                    return
-                }
-                
-            }
-        }
-    }
-    
     //MARK: - Private Method
-
+    
     private func makeCurrentWeather(with data: CurrentWeather) -> CurrentViewModel {
         var iconName: String = ""
         let minTemperature = data.main.temperatureMin
@@ -75,33 +62,52 @@ final class UseCase {
         let temperature = Temperature(lowestTemperature: String(minTemperature),
                                       highestTemperature: String(maxTemperature),
                                       currentTemperature: String(currentTemperature))
-
+        
         if let weather = data.weathers.first {
             iconName = weather.icon
         }
-
+        
         return CurrentViewModel(currentWeatherIcon: iconName, temperature: temperature)
     }
-
+    
     private func makeForecastWeather(with data: ForecastWeather) -> [ForecastViewModel] {
         
         var forecastViewModels = [ForecastViewModel]()
-
+        
         data.list.forEach { element in
             let forecastDate: String = element.date
             let forecastTemperature: Double = element.main.temperature
             let forecastInformation = ForecastInformation(forecastDate: forecastDate, forecastDegree: String(forecastTemperature))
-            var forecastIcon: String = ""
-
+            var forecastIcon: Data = Data()
+            
             if let icon = element.weather.first?.icon {
-                forecastIcon = icon
+                guard let iconData = storage[icon] else {
+                    return
+                }
+                print(icon, storage.keys)
+                forecastIcon = iconData
             }
-
+            
             let forecastViewModel = ForecastViewModel(forecastEmogi: forecastIcon, forecastInformation: forecastInformation)
             forecastViewModels.append(forecastViewModel)
         }
-
+        
         return forecastViewModels
+    }
+    
+    //MARK: - Icon Image Test
+    func loadIconImage() {
+        repository.loadIcon { (data, error) in
+            DispatchQueue.main.async {
+                let element = URLPath.iconList.removeFirst()
+                
+                guard let certifiedData = data else {
+                    return
+                }
+                
+                self.storage[element] = certifiedData
+            }
+        }
     }
 }
 

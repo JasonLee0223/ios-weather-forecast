@@ -9,7 +9,6 @@ import CoreLocation
 
 class ViewController: UIViewController {
     
-//    private let repository = Repository()
     private let useCase = UseCase()
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: configureCollectionView())
@@ -35,7 +34,6 @@ class ViewController: UIViewController {
     
     private var currentWeather: CurrentViewModel?
     private var forecastWeathers: [ForecastViewModel]?
-    private var iconData: Data?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,8 +43,8 @@ class ViewController: UIViewController {
         UserLocation.shared.authorize()
         
         let location = useCase.receiveCurrentLocation()
-        
         useCase.determine(with: location)
+        useCase.loadIconImage()
     }
 }
 
@@ -110,7 +108,6 @@ extension ViewController: WeatherModelDelegate {
     }
     
     func loadIcon(of data: Data) {
-        iconData = data
         self.collectionView.reloadData()
     }
 }
