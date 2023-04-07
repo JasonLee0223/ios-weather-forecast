@@ -11,6 +11,7 @@ class ViewController: UIViewController {
     
     private let repository = Repository()
     let apiDTO = APIWeatherModelDTO()
+    
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: configureCollectionView())
         
@@ -62,8 +63,11 @@ extension ViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ForecastWeatherCell.identifier, for: indexPath) as? ForecastWeatherCell else {
             return UICollectionViewCell()
         }
-
-
+        
+        if let celtifiedForecastWeatherModel = forecastWeather {
+            cell.prepare(model: celtifiedForecastWeatherModel)
+        }
+        
         return cell
     }
 
@@ -73,7 +77,11 @@ extension ViewController: UICollectionViewDataSource {
             guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CurrentWeatherHeaderView.identifier, for: indexPath) as? CurrentWeatherHeaderView else {
                 return UICollectionReusableView()
             }
-            headerView.prepare(text: currentWeather?.temperature.currentTemperature ?? "wow")
+            
+            if let celtifiedCurrentWeatherModel = currentWeather {
+                headerView.prepare(model: celtifiedCurrentWeatherModel)
+            }
+            
             return headerView
         default:
             return UICollectionReusableView()
@@ -91,7 +99,7 @@ extension ViewController: WeatherModelDelegate {
     func loadForecastWeather(of: ForecastViewModel) {
         print(#line, "wow!")
         forecastWeather = of
-//        self.collectionView.reloadData()
+        self.collectionView.reloadData()
     }
 
     
