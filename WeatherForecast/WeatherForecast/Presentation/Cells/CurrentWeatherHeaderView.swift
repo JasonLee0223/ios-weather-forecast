@@ -37,24 +37,37 @@ class CurrentWeatherHeaderView: UICollectionReusableView {
     
     private var currentLocation: UILabel = {
         let currentLocation = UILabel()
-        currentLocation.text = "서울특별시 용산구"
+//        currentLocation.text = "서울특별시 용산구"
         
         return currentLocation
     }()
     
     private var lowestAndHighestTemperature: UILabel = {
         let lowestAndHighestTemperature = UILabel()
-        lowestAndHighestTemperature.text = "최저 1.0˚ 최고 11.0˚"
+//        lowestAndHighestTemperature.text = "최저 1.0˚ 최고 11.0˚"
         
         return lowestAndHighestTemperature
     }()
     
     private var currentTemperature: UILabel = {
         let currentTemperature = UILabel()
-        currentTemperature.text = "11.0˚"
+//        currentTemperature.text = "11.0˚"
         
         return currentTemperature
     }()
+    
+    //MARK: - Public Method
+    func prepareForCurrentLocation(text: String) {
+        currentLocation.text = text
+    }
+    
+    func prepareLowestAndHighestTemperature(text: String) {
+        lowestAndHighestTemperature.text = text
+    }
+    
+    func prepareCurrentTemperature(text: String) {
+        currentTemperature.text = text
+    }
     
     //MARK: - StackView
     
