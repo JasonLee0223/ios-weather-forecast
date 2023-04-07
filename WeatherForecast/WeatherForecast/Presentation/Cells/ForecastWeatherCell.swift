@@ -12,7 +12,7 @@ final class ForecastWeatherCell: UICollectionViewCell {
 
     private lazy var dateLabel: UILabel = {
         let label = UILabel()
-        label.text = "OO/OO(월) OO시"
+        label.text = ""
         label.translatesAutoresizingMaskIntoConstraints = false
         label.setContentHuggingPriority(.defaultLow, for: .horizontal)
         return label
@@ -20,7 +20,7 @@ final class ForecastWeatherCell: UICollectionViewCell {
 
     private lazy var atmosphericTemperatureLabel: UILabel = {
         let label = UILabel()
-        label.text = "13˚C"
+        label.text = ""
         label.translatesAutoresizingMaskIntoConstraints = false
         label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return label
@@ -58,7 +58,21 @@ final class ForecastWeatherCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func prepare(text: String) {
-        dateLabel.text = text
+    func prepare(model: ForecastViewModel) {
+        dateLabel.text = DateFormatter().transWeahterDateForm(from: model.forecastInformation.forecastDate)
+        
+        
+        
+        atmosphericTemperatureLabel.text = model.forecastInformation.forecastDegree + "˚"
+        weatherImage.image = UIImage(named: model.forecastEmogi)
+    }
+}
+
+private extension DateFormatter {
+    func transWeahterDateForm(from date: String) -> String {
+        self.dateFormat = "MM/dd(E) HH시"
+        self.locale = Locale(identifier:"ko_KR")
+        guard let temp = self.date(from: date) else { return "" }
+        return self.string(from: temp)
     }
 }
