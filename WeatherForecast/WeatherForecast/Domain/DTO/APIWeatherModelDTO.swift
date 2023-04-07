@@ -7,9 +7,11 @@
 
 import Foundation
 import CoreLocation
+import Dispatch
 
-final class APIWeatherModelDTO {
-    
+class APIWeatherModelDTO {
+
+    weak var delegate: WeatherModelDelegate?
     //MARK: - Private Property
 
     private let repository = Repository()
@@ -24,28 +26,31 @@ final class APIWeatherModelDTO {
         return location
     }
     
-    func determineDTO(with location: CLLocationCoordinate2D) -> [WeatherViewModel] {
-        var elements: [WeatherViewModel] = []
+    func determineDTO(with location: CLLocationCoordinate2D) {
+//        var elements: [WeatherViewModel] = []
         
         URLPath.allCases.forEach { path in
             switch path {
             case .currentWeather:
                 repository.loadData(with: location,
                                     path: path) { weatherModel, error in
-                    if let currentWeatherModel = weatherModel as? CurrentWeather {
-                        elements.append(self.makeCurrentWeatherDTO(with: currentWeatherModel))
+                    DispatchQueue.main.async {
+                        if let currentWeatherModel = weatherModel as? CurrentWeather {
+                            let result = self.makeCurrentWeatherDTO(with: currentWeatherModel)
+                            print(#function, #line, "inner Delegate \(result)")
+                            self.delegate?.loadCurrentWeather(of: result)
+                        }
                     }
                 }
             case .forecastWeather:
                 repository.loadData(with: location,
                                     path: path) { weatherModel, error in
                     if let forecastWeatherModel = weatherModel as? ForecastWeather {
-                        elements.append(self.makeForecastWeatherDTO(with: forecastWeatherModel))
+                        self.delegate?.loadForecastWeather(of: self.makeForecastWeatherDTO(with: forecastWeatherModel))
                     }
                 }
             }
         }
-        return elements
     }
     
     //MARK: - Private Method
@@ -81,4 +86,9 @@ final class APIWeatherModelDTO {
         return ForecastViewModel(forecastEmogi: forecastIcon,
                                  forecastInformation: ForecastInformation(forecastDate: forecastDate, forecastDegree: String(forecastTemperature)))
     }
+}
+
+protocol WeatherModelDelegate: NSObject {
+    func loadCurrentWeather(of: CurrentViewModel)
+    func loadForecastWeather(of: ForecastViewModel)
 }

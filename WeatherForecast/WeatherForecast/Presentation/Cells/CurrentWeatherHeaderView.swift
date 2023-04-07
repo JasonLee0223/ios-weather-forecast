@@ -51,7 +51,7 @@ class CurrentWeatherHeaderView: UICollectionReusableView {
     
     private var currentTemperature: UILabel = {
         let currentTemperature = UILabel()
-        currentTemperature.text = "11.0˚"
+//        currentTemperature.text = "11.0˚"
         
         return currentTemperature
     }()
@@ -95,6 +95,10 @@ class CurrentWeatherHeaderView: UICollectionReusableView {
         NSLayoutConstraint.activate([
             addressInformationView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor)
         ])
+    }
+
+    func prepare(text: String) {
+        currentTemperature.text = text
     }
 }
 
