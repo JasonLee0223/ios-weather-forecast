@@ -55,7 +55,7 @@ final class UseCase {
     //MARK: - Private Method
     
     private func makeCurrentWeather(with data: CurrentWeather) -> CurrentViewModel {
-        var iconName: String = ""
+        var iconName: Data = Data()
         let minTemperature = data.main.temperatureMin
         let maxTemperature = data.main.temperatureMax
         let currentTemperature = data.main.temperature
@@ -64,7 +64,9 @@ final class UseCase {
                                       currentTemperature: String(currentTemperature))
         
         if let weather = data.weathers.first {
-            iconName = weather.icon
+            if let iconData = storage[weather.icon] {
+                iconName = iconData
+            }
         }
         
         return CurrentViewModel(currentWeatherIcon: iconName, temperature: temperature)
